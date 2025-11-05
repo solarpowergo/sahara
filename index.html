@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SAHARA Premium Wear — Desert-Inspired Luxury</title>
+  <meta name="description" content="Sahara Premium Wear — embroidered desert luxury. Limited Edition Hoodie & Pants."/>
+  <meta property="og:title" content="SAHARA Premium Wear — Drop 01"/>
+  <meta property="og:description" content="Premium desert-inspired fashion. Embroidery, heavyweight fleece, limited quantities."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="prototype.jpg"/>
+  <meta name="theme-color" content="#0f0e0d"/>
+
+  <style>
+    /* ===============================
+       SAHARA — Ultra-Polished One-File Site
+       =============================== */
+    :root{
+      --bg:#0e0c0a;
+      --bg-2:#14100d;
+      --gold:#cfb06b;
+      --gold-2:#e9c77a;
+      --ink:#e9ddbe;
+      --line:#2a241c;
+      --muted:#a38a61;
+      --max:1180px;
+      --radius:14px;
+      --shadow:0 18px 80px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 800px at 50% -200px, #1c150f 0%, #0e0c0a 55%);
+      color:var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      line-height:1.6;
+    }
+
+    /* Frame */
+    .frame{position:fixed; inset:16px; pointer-events:none;
+      border:1px solid rgba(207,176,107,.45); border-radius:10px}
+    .corner{position:absolute;width:26px;height:26px;border:1.4px solid rgba(207,176,107,.7)}
+    .corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;border-radius:8px 0 0 0}
+    .corner.tr{top:-1px;right:-1px;border-left:none;border-bottom:none;border-radius:0 8px 0 0}
+    .corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;border-radius:0 0 0 8px}
+    .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;border-radius:0 0 8px 0}
+
+    /* Minimal nav that appears after scroll */
+    .nav{
+      position:fixed; top:-64px; left:0; right:0; z-index:50;
+      display:flex; justify-content:center;
+      transition:transform .5s ease, background .4s ease;
+      transform:translateY(-100%);
+      background:rgba(14,12,10,.6); backdrop-filter:saturate(120%) blur(8px);
+      border-bottom:1px solid rgba(207,176,107,.25);
+    }
+    .nav.show{ transform:translateY(0); }
+    .nav-inner{max-width:var(--max); width:100%; padding:10px 18px; display:flex; justify-content:space-between; align-items:center}
+    .brand{display:flex; gap:10px; align-items:center; color:var(--ink); text-decoration:none; letter-spacing:2px; font-weight:800}
+    .brand .dot{width:14px;height:14px;border-radius:50%; background:radial-gradient(circle at 35% 35%, var(--gold-2), var(--gold)); box-shadow:0 0 14px rgba(233,199,122,.5)}
+    .nav a{color:var(--ink); text-decoration:none; opacity:.9}
+    .links{display:flex; gap:18px; align-items:center}
+    .btn{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#1a1206; border:none; padding:10px 16px; border-radius:10px; font-weight:900; letter-spacing:1px; cursor:pointer; box-shadow:var(--shadow)}
+    .btn:hover{filter:brightness(1.06)}
+
+    /* SPLASH = exact hero image */
+    .splash{min-height:100vh; display:grid; place-items:center; position:relative; overflow:hidden}
+    .splash::before{ /* subtle vignette */
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(60% 40% at 50% 20%, transparent, rgba(0,0,0,.35) 70%);
+      z-index:1;
+    }
+    .splash-img{width:min(100%, 1060px); height:auto; display:block; z-index:0; filter:contrast(1.02) brightness(.97); border-radius:8px; box-shadow:0 50px 140px rgba(0,0,0,.55)}
+    .cta{position:absolute; left:50%; transform:translateX(-50%); bottom:clamp(12vh, 16%, 160px); z-index:2;
+      background:transparent; color:var(--gold-2); border:1.5px solid rgba(207,176,107,.8);
+      padding:12px 28px; border-radius:10px; letter-spacing:1.6px; font-weight:900; cursor:pointer}
+    .cta::after{ /* gold sheen on hover */
+      content:""; position:absolute; inset:0; border-radius:inherit;
+      background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.12) 50%, transparent 100%);
+      transform:translateX(-120%); transition:transform .8s ease;
+    }
+    .cta:hover::after{ transform:translateX(120%); }
+
+    /* Sections */
+    .section{max-width:var(--max); margin:0 auto; padding:72px 18px}
+    .headline{letter-spacing:2px; text-transform:uppercase; color:var(--gold-2); margin:0 0 18px}
+    .lead{color:#d9cca8; margin:0 0 30px}
+
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:26px}
+    @media (max-width:920px){ .grid{grid-template-columns:1fr} }
+
+    .card{background:linear-gradient(180deg, rgba(20,16,13,.9), rgba(20,16,13,.6)); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+    .card img{display:block; width:100%; height:auto}
+    .meta{padding:18px 18px 22px; border-top:1px solid var(--line)}
+    .meta h3{margin:0 0 6px; letter-spacing:.6px}
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; border:1px solid rgba(207,176,107,.35); background:linear-gradient(180deg, rgba(20,16,13,.65), rgba(20,16,13,.4)); color:var(--ink); font-size:14px}
+    .price{color:var(--gold-2); font-weight:900; letter-spacing:.8px}
+
+    /* Thumbs strip + "DETAILS" label */
+    .strip{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:26px 0 6px}
+    .thumb{aspect-ratio:16/9; border:1px solid rgba(207,176,107,.35); border-radius:12px; overflow:hidden; background:#0c0b0a}
+    .thumb img{width:100%; height:100%; object-fit:cover}
+    .details-label{ text-align:center; font-family: ui-serif, serif; color:var(--gold-2); letter-spacing:6px; margin-top:12px; opacity:.95}
+
+    /* Cart drawer (demo) */
+    .drawer{position:fixed; right:0; top:0; bottom:0; width:min(420px, 90%); background:#13100c; border-left:1px solid var(--line); transform:translateX(100%); transition:transform .4s ease; z-index:60; box-shadow:-30px 0 80px rgba(0,0,0,.4)}
+    .drawer.open{ transform:translateX(0); }
+    .drawer header{display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid var(--line)}
+    .drawer .items{padding:16px 18px; display:grid; gap:14px}
+    .qty{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); padding:6px 10px; border-radius:8px}
+    .checkout{position:sticky; bottom:0; padding:16px 18px; border-top:1px solid var(--line); background:#13100c}
+
+    /* Lightbox */
+    .lightbox{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.8); z-index:70}
+    .lightbox.show{display:grid}
+    .lightbox img{max-width:90vw; max-height:85vh; border-radius:10px; box-shadow:0 40px 140px rgba(0,0,0,.65)}
+
+    /* Reveal on scroll */
+    .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    footer{max-width:var(--max); margin:0 auto; padding:70px 18px 90px; color:#cdbf9b}
+    .cols{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+    @media (max-width:900px){ .cols{grid-template-columns:1fr} }
+    .tiny{font-size:12px; opacity:.7}
+  </style>
+</head>
+<body>
+  <!-- Frame -->
+  <div class="frame" aria-hidden="true">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+  </div>
+
+  <!-- Appears after scroll -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top"><span class="dot"></span> SAHARA</a>
+      <div class="links">
+        <a href="#shop">Shop</a>
+        <a href="#details">Details</a>
+        <button class="btn" onclick="openDrawer()">Cart <span id="cartCount">(0)</span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Opening splash (exact image) -->
+  <section class="splash" id="top">
+    <img class="splash-img" src="prototype.jpg" alt="Sahara Premium Wear Prototype">
+    <button class="cta" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">SHOP NOW</button>
+  </section>
+
+  <!-- Shop -->
+  <section class="section reveal" id="shop">
+    <h2 class="headline">Shop</h2>
+    <p class="lead">Heavyweight comfort. Golden desert embroidery. Built to last.</p>
+
+    <div class="grid">
+      <article class="card">
+        <img loading="lazy" src="hoodie.jpg" alt="Sahara Hoodie — صحراء" onclick="openLightbox(this.src)">
+        <div class="meta">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px">
+            <h3>Sahara Hoodie — صحراء</h3><div class="price">$90</div>
+          </div>
+          <p>420g fleece, leopard chest embroidery, sleeve insignia, Arabic wordmark.</p>
+          <div class="pill">83% cotton</div>
+          <div class="pill" style="margin-left:8px; display:inline-flex">Regular–oversized fit</div>
+          <div style="display:flex; gap:10px; margin-top:14px; align-items:center">
+            <label for="sizeH" style="opacity:.9">Size</label>
+            <select id="sizeH">
+              <option>S</option><option>M</option><option selected>L</option><option>XL</option>
+            </select>
+            <span class="qty"><button onclick="dec('hoodie')">−</button><span id="q-hoodie">1</span><button onclick="inc('hoodie')">+</button></span>
+            <button class="btn" onclick="add('Sahara Hoodie', 90, 'hoodie.jpg', 'hoodie')">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img loading="lazy" src="pants.jpg" alt="Sahara Pants — الصحراء" onclick="openLightbox(this.src)">
+        <div class="meta">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px">
+            <h3>Sahara Pants — الصحراء</h3><div class="price">$70</div>
+          </div>
+          <p>Wide-leg silhouette with insignia embroidery and contrast stitching.</p>
+          <div class="pill">360–420g</div>
+          <div class="pill" style="margin-left:8px; display:inline-flex">Wide-leg</div>
+          <div style="display:flex; gap:10px; margin-top:14px; align-items:center">
+            <label for="sizeP" style="opacity:.9">Size</label>
+            <select id="sizeP">
+              <option>S</option><option>M</option><option selected>L</option><option>XL</option>
+            </select>
+            <span class="qty"><button onclick="dec('pants')">−</button><span id="q-pants">1</span><button onclick="inc('pants')">+</button></span>
+            <button class="btn" onclick="add('Sahara Pants', 70, 'pants.jpg', 'pants')">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="strip">
+      <div class="thumb"><img src="prototype.jpg" alt="Mandala back embroidery" loading="lazy" onclick="openLightbox(this.src)"></div>
+      <div class="thumb"><img src="hoodie.jpg" alt="Leopard chest detail" loading="lazy" onclick="openLightbox(this.src)"></div>
+      <div class="thumb"><img src="pants.jpg" alt="Wordmark detail" loading="lazy" onclick="openLightbox(this.src)"></div>
+    </div>
+    <div class="details-label" id="details">DETAILS</div>
+  </section>
+
+  <!-- Details -->
+  <section class="section reveal">
+    <div class="card" style="padding:26px">
+      <h2 class="headline">Craft & Specs</h2>
+      <ul style="margin:0; padding-left:18px; line-height:1.9">
+        <li>Premium embroidery: back mandala disc, chest leopard, Arabic wordmark “صحراء”.</li>
+        <li>Heavyweight fleece (hoodie ~420g; pants 360–420g) for structure and drape.</li>
+        <li>Contrast stitching and sleeve insignia echo desert flame shapes.</li>
+        <li>Limited run — Edition 01. Custom colors and sizes can be added later.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="cols">
+      <div>
+        <h3 style="margin:0 0 8px">About SAHARA</h3>
+        <p>Sahara Premium Wear blends Arabic identity with modern minimal luxury. Built in Lebanon — designed for the world.</p>
+      </div>
+      <div>
+        <h3 style="margin:0 0 8px">Contact</h3>
+        <p class="tiny">DM @sahara or email hello@sahara.example · This is a demo — connect real payments later.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="pill" href="#top">↑ Back to top</a>
+          <a class="pill" href="#shop">Shop</a>
+          <a class="pill" href="#details">Details</a>
+        </div>
+      </div>
+    </div>
+    <p class="tiny" style="margin-top:20px">© 2025 Sahara Premium Wear</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" alt="Preview">
+  </div>
+
+  <!-- Cart Drawer -->
+  <aside class="drawer" id="drawer" aria-label="Cart">
+    <header>
+      <strong>Cart</strong>
+      <button onclick="closeDrawer()">✕</button>
+    </header>
+    <div class="items" id="cartItems"></div>
+    <div class="checkout">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong>Total</strong>
+        <strong id="total">$0</strong>
+      </div>
+      <button class="btn" style="width:100%; margin-top:10px" onclick="alert('Connect Stripe/Shopify later')">Checkout</button>
+    </div>
+  </aside>
+
+  <script>
+    // Show nav after scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('show', window.scrollY > 40);
+    document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+    // Reveal on scroll
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} })
+    }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Lightbox
+    function openLightbox(src){ document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.add('show'); }
+    function closeLightbox(){ document.getElementById('lightbox').classList.remove('show'); }
+
+    // Cart (demo)
+    const cart = [];
+    function inc(id){ const el=document.getElementById('q-'+id); el.textContent = +el.textContent + 1; }
+    function dec(id){ const el=document.getElementById('q-'+id); el.textContent = Math.max(1, +el.textContent - 1); }
+    function add(name, price, img, id){
+      const qty = +document.getElementById('q-'+id).textContent;
+      const item = {name, price, img, qty};
+      cart.push(item);
+      render();
+      openDrawer();
+    }
+    function render(){
+      const box = document.getElementById('cartItems');
+      const count = cart.reduce((a,b)=>a+b.qty,0);
+      document.getElementById('cartCount').textContent = '('+count+')';
+      box.innerHTML = cart.map((it,i)=>`
+        <div style="display:flex; gap:12px; align-items:center">
+          <img src="${it.img}" alt="" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between">
+              <strong>${it.name}</strong>
+              <span>$${(it.price*it.qty).toFixed(0)}</span>
+            </div>
+            <span class="tiny">Qty ${it.qty}</span>
+          </div>
+          <button onclick="rm(${i})">✕</button>
+        </div>
+      `).join('');
+      const total = cart.reduce((a,b)=>a + b.price*b.qty, 0);
+      document.getElementById('total').textContent = '$' + total.toFixed(0);
+    }
+    function rm(i){ cart.splice(i,1); render(); }
+    function openDrawer(){ document.getElementById('drawer').classList.add('open'); }
+    function closeDrawer(){ document.getElementById('drawer').classList.remove('open'); }
+  </script>
+</body>
+</html>
