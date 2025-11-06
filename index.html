@@ -1,155 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sahara Premium Wear — صحراء</title>
 <meta name="description" content="Premium Desert-Inspired Fashion by Sahara Premium Wear" />
-<meta name="theme-color" content="#1a1a1a" />
+<meta name="theme-color" content="#111111" />
+
+<!-- Social -->
+<meta property="og:title" content="Sahara Premium Wear — صحراء" />
+<meta property="og:description" content="Premium Desert-Inspired Fashion" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="prototype.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
 <style>
+/* ===== Tokens ===== */
 :root{
-  --black:#0a0a0a;
-  --graphite:#111;
-  --panel:#1a1a1a;
-  --gold:#e5c172;
-  --gold-2:#f0d58a;
-  --ink:#f8f8f8;
-  --muted:#bfbfbf;
-  --line:#222;
-  --max:1200px;
-  --radius:14px;
-  --shadow:0 20px 80px rgba(0,0,0,.55);
+  --bg1:#111; --bg2:#1a1a1a; --bg3:#0e0e0e;
+  --panel:#141414; --line:#222;
+  --gold:#e5c172; --gold-soft:#f0d58a;
+  --fg:#f6f6f6; --muted:#cfcfcf; --dim:#9a9a9a;
+  --shadow:0 30px 90px rgba(0,0,0,.55);
+  --radius:16px; --max:1400px;
 }
+
+/* ===== Base ===== */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
-  background:linear-gradient(180deg,var(--graphite),#141414,var(--black));
-  color:var(--ink);
-  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  overflow-x:hidden;scroll-behavior:smooth;
+  font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--fg);
+  background:linear-gradient(180deg,var(--bg1),var(--bg2),var(--bg3));
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  scroll-behavior:smooth; overflow-x:hidden;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+
+/* ===== Utils ===== */
+.container{max-width:var(--max);width:100%;margin:0 auto;padding:0 4vw}
+.ta-c{text-align:center}
+.center{display:grid;place-items:center}
+.rule{height:1px; width:min(900px,86%); margin:0 auto 26px;
+  background:linear-gradient(90deg,transparent,rgba(229,193,114,.55),transparent);
 }
 
-/* Button */
-.btn{
-  background:transparent;border:1.6px solid var(--gold);color:var(--gold);
-  padding:14px 34px;border-radius:10px;font-weight:800;letter-spacing:1.1px;
-  cursor:pointer;transition:all .35s ease;
+/* ===== Glass Nav ===== */
+.nav{position:fixed;top:18px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.nav-inner{
+  pointer-events:auto;display:flex;align-items:center;gap:14px;padding:10px 14px;
+  background:rgba(20,20,20,.55);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;backdrop-filter:blur(10px) saturate(115%);
+  transform:translateY(-20px);opacity:0;transition:.5s ease;
 }
-.btn:hover{background:var(--gold);color:#000;transform:translateY(-2px);box-shadow:0 10px 30px rgba(229,193,114,.25)}
+.nav.show .nav-inner{transform:none;opacity:1}
+.nav a,.nav button{border:0;background:none;color:var(--fg);font-weight:700;cursor:pointer;padding:8px 10px;border-radius:10px}
+.nav .pill{border:1px solid rgba(255,255,255,.12)}
 
-/* HERO */
-.hero{
-  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  position:relative;text-align:center;background:#111;
-}
-.hero-bg{
-  position:absolute;inset:0;background:url('prototype.jpg') center/cover no-repeat;
-  opacity:.3;filter:brightness(0.9) contrast(1.1);
-}
-.hero-vignette{
-  position:absolute;inset:0;
-  background:radial-gradient(70% 50% at 50% 35%, rgba(0,0,0,.1), rgba(0,0,0,.6) 70%);
-}
-.hero-content{
-  position:relative;z-index:2;opacity:0;animation:fadeIn 1.8s ease .1s forwards;
-}
-.hero .ar{font-size:clamp(24px, 4.5vw, 44px);color:var(--gold);letter-spacing:2px;}
-.hero .en{font-size:clamp(28px, 6vw, 64px);color:var(--gold);letter-spacing:3px;font-weight:900;margin-top:6px;}
-.hero .tag{font-size:clamp(16px, 2.4vw, 20px);color:#dddddd;margin-top:10px;}
-.hero .actions{margin-top:32px}
+/* ===== Hero (Parallax + Shimmer) ===== */
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero-bg{position:absolute;inset:-12vh 0 -12vh 0;background:url('prototype.jpg') center/cover no-repeat;filter:brightness(.96) contrast(1.06);transform:translateY(0);will-change:transform}
+.hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,.52)}
+.hero-content{position:relative;z-index:2;opacity:0;animation:fadeIn 1.8s ease .1s forwards}
+.hero .ar{font-size:clamp(2rem,5.2vw,4rem);color:var(--gold);letter-spacing:3px;display:inline-block;position:relative;margin-bottom:8px;text-shadow:0 0 12px rgba(229,193,114,.25)}
+.hero .ar::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(240,213,138,.35),transparent);filter:blur(8px);opacity:.6;animation:shimmer 11s linear infinite}
+.hero h1{font-size:clamp(2.8rem,7vw,5.8rem);color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+.hero p{margin-top:12px;color:#ddd;font-size:1.15rem}
 
-/* PRODUCTS */
-.section{padding:80px 0;}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
-@media (max-width:980px){.products{grid-template-columns:1fr}}
+/* Button (gradient shimmer) */
+.button{
+  --bd:2px;position:relative;display:inline-block;margin-top:40px;padding:16px 48px;border-radius:12px;
+  font-weight:800;letter-spacing:1px;color:var(--gold);background:transparent;border:var(--bd) solid var(--gold);
+  cursor:pointer;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease,color .35s ease,background .35s ease;
+}
+.button::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(240,213,138,.45),transparent);animation:shimmer 13s linear infinite;opacity:.7}
+.button:hover{background:var(--gold);color:#000;transform:translateY(-2px);box-shadow:0 0 26px rgba(229,193,114,.28)}
+
+/* ===== Section: Products ===== */
+.section{padding:120px 0}
+.section-title{ text-align:center;color:var(--gold);letter-spacing:6px;text-transform:uppercase;margin-bottom:26px }
+.kicker{ text-align:center;color:var(--muted);margin-bottom:50px }
+
+.products{display:grid;grid-template-columns:repeat(2,minmax(360px,1fr));gap:46px;align-items:stretch}
+@media (max-width:1050px){.products{grid-template-columns:1fr}}
 .card{
   background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-  overflow:hidden;box-shadow:var(--shadow);
-  transform:translateY(20px);opacity:0;animation:rise .9s ease forwards;
+  overflow:hidden;box-shadow:var(--shadow);transform:translateY(30px);opacity:0;
+  transition:transform 900ms cubic-bezier(.2,.8,.2,1), opacity 900ms ease;
 }
-.card:nth-child(2){animation-delay:.25s}
-.card img{width:100%;height:auto;display:block}
-.meta{padding:18px 18px 24px;border-top:1px solid var(--line)}
-.meta h3{margin:0 0 6px;color:var(--gold);letter-spacing:.8px}
-.meta p{margin:0;color:#d0d0d0}
+.card.show{transform:none;opacity:1}
+.card img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.meta{padding:18px 20px 24px;border-top:1px solid var(--line)}
+.meta h3{color:var(--gold);margin:0 0 8px;font-size:1.25rem}
+.meta p{color:#d6d6d6;margin:0 0 8px}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.badge{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1);color:#ddd;font-size:14px}
+.badge{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:#ddd;font-size:14px}
 
-/* DETAILS */
-h3.section-label{
-  letter-spacing:6px;color:var(--gold);text-align:center;margin:40px 0 16px;
+/* ===== Details Strip ===== */
+.strip{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media (max-width:1050px){.strip{grid-template-columns:1fr}}
+.thumb{
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);
+  transform:translateY(24px);opacity:0;transition:transform .9s ease,opacity .9s ease
+}
+.thumb.show{transform:none;opacity:1}
+.thumb img{width:100%;aspect-ratio:16/9;object-fit:cover}
+
+/* ===== Size Guide (Accordion) ===== */
+.size-guide{padding:110px 0;background:linear-gradient(180deg,#151515,#0d0d0d)}
+.size-wrap{max-width:min(1100px,92%);margin:0 auto}
+.size-title{text-align:center;color:var(--gold);letter-spacing:6px;text-transform:uppercase;margin-bottom:18px}
+.size-sub{color:var(--muted);text-align:center;margin-bottom:28px}
+details.size{background:#121212;border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden;box-shadow:var(--shadow)}
+details.size > summary{
+  user-select:none;cursor:pointer;list-style:none;padding:18px 20px;font-weight:800;letter-spacing:.8px;color:var(--fg);
+  display:flex;align-items:center;justify-content:space-between
+}
+details.size > summary::marker{display:none}
+details.size[open] summary{border-bottom:1px solid var(--line)}
+.chev{width:18px;height:18px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg);transition:.3s ease}
+details.size[open] .chev{transform:rotate(45deg)}
+.table-wrap{padding:16px 20px 24px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.98rem}
+th,td{padding:14px 12px;border-bottom:1px solid #1f1f1f;text-align:center}
+th{color:var(--gold);font-weight:800}
+td{color:#ddd}
+.caption{margin-top:10px;color:#9d9d9d;font-size:.9rem}
+
+/* ===== Contact / Footer ===== */
+.site-footer{padding:100px 0 110px;text-align:center;color:var(--dim);border-top:1px solid var(--line);background:linear-gradient(180deg,#121212,#0b0b0b)}
+.socials{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.socials a{border:1px solid rgba(255,255,255,.12);padding:10px 14px;border-radius:999px;color:#eaeaea;transition:.25s}
+.socials a:hover{background:rgba(255,255,255,.06)}
+.contact-card{
+  margin:22px auto 0;max-width:560px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:#121212;color:#ddd
 }
 
-/* FOOTER */
-footer{padding:90px 0 110px;color:#b9b9b9;}
-hr.gold{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(229,193,114,.6),transparent);margin:30px 0;}
+/* ===== Animations ===== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes shimmer{0%{transform:translateX(-120%)}50%{transform:translateX(80%)}100%{transform:translateX(180%)}}
 
-/* ANIMATIONS */
-@keyframes fadeIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
-@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== A11y ===== */
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+:focus-visible{outline:3px solid rgba(229,193,114,.45);outline-offset:4px;border-radius:10px}
 </style>
 </head>
 <body>
 
-<header class="hero" id="top">
-  <div class="hero-bg"></div>
-  <div class="hero-vignette"></div>
+<!-- Glass nav -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="pill">Sahara</a>
+    <a href="#shop" class="pill">Shop</a>
+    <a href="#size" class="pill">Size Guide</a>
+    <button class="pill" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top" aria-label="Hero">
+  <div class="hero-bg" id="parallax"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
   <div class="hero-content container ta-c">
     <div class="ar">صحراء</div>
-    <div class="en">SAHARA PREMIUM WEAR</div>
-    <div class="tag">Premium Desert-Inspired Fashion</div>
-    <div class="actions">
-      <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">SHOP NOW</button>
-    </div>
+    <h1>SAHARA PREMIUM WEAR</h1>
+    <p>Premium Desert-Inspired Fashion</p>
+    <button class="button" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" aria-label="Shop now">SHOP NOW</button>
   </div>
 </header>
 
-<main class="section" id="shop">
-  <div class="container">
-    <h2 class="ta-c" style="color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin:0 0 32px">Shop</h2>
+<!-- PRODUCTS -->
+<main class="section container" id="shop" aria-labelledby="shop-title">
+  <h2 class="section-title" id="shop-title">Shop</h2>
+  <p class="kicker">Heavyweight embroidery · Wide-leg silhouette · Modern Arabic luxury</p>
 
-    <div class="products">
-      <article class="card">
-        <img src="hoodie.jpg" alt="Sahara Hoodie">
-        <div class="meta">
-          <h3>Sahara Hoodie — صحراء</h3>
-          <p>Heavyweight fleece with golden embroidery and Arabic identity — <strong>$90</strong></p>
-          <div class="badges">
-            <span class="badge">420g</span>
-            <span class="badge">83% cotton</span>
-            <span class="badge">Oversized</span>
-          </div>
+  <div class="products" role="list">
+    <article class="card" role="listitem" aria-labelledby="hoodie-title">
+      <img src="hoodie.jpg" alt="Sahara Hoodie — صحراء" loading="eager" />
+      <div class="meta">
+        <h3 id="hoodie-title">Sahara Hoodie — صحراء</h3>
+        <p>Heavyweight fleece with golden embroidery and Arabic identity — <strong>$90</strong></p>
+        <div class="badges">
+          <span class="badge">420g</span><span class="badge">83% cotton</span><span class="badge">Oversized</span>
         </div>
-      </article>
-      <article class="card">
-        <img src="pants.jpg" alt="Sahara Pants">
-        <div class="meta">
-          <h3>Sahara Pants — الصحراء</h3>
-          <p>Wide-leg design, contrast stitching, matching insignia embroidery — <strong>$70</strong></p>
-          <div class="badges">
-            <span class="badge">360–420g</span>
-            <span class="badge">Wide-leg</span>
-            <span class="badge">Drawcord waist</span>
-          </div>
-        </div>
-      </article>
-    </div>
+      </div>
+    </article>
 
-    <h3 class="section-label">DETAILS</h3>
-    <div class="products" style="grid-template-columns:repeat(3,1fr)">
-      <div class="card"><img src="prototype.jpg" alt="Back mandala embroidery detail"></div>
-      <div class="card" style="animation-delay:.1s"><img src="hoodie.jpg" alt="Chest embroidery"></div>
-      <div class="card" style="animation-delay:.2s"><img src="pants.jpg" alt="Wordmark detail"></div>
-    </div>
+    <article class="card" role="listitem" aria-labelledby="pants-title">
+      <img src="pants.jpg" alt="Sahara Pants — الصحراء" loading="eager" />
+      <div class="meta">
+        <h3 id="pants-title">Sahara Pants — الصحراء</h3>
+        <p>Wide-leg design, contrast stitching, matching insignia embroidery — <strong>$70</strong></p>
+        <div class="badges">
+          <span class="badge">360–420g</span><span class="badge">Wide-leg</span><span class="badge">Drawcord waist</span>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Details strip -->
+  <div class="strip" style="margin-top:56px">
+    <div class="thumb"><img src="prototype.jpg" alt="Back mandala embroidery detail" loading="lazy" /></div>
+    <div class="thumb"><img src="hoodie.jpg" alt="Chest embroidery detail" loading="lazy" /></div>
+    <div class="thumb"><img src="pants.jpg" alt="Arabic wordmark detail" loading="lazy" /></div>
   </div>
 </main>
 
-<footer class="container ta-c">
-  <hr class="gold" />
-  <p>Sahara Premium Wear blends Arabic identity with modern minimal luxury. Built in Lebanon — designed for the world.</p>
-  <p style="margin-top:16px;color:#9c9c9c">© 2025 Sahara Premium Wear · All Rights Reserved</p>
+<!-- SIZE GUIDE (Accordion) -->
+<section class="size-guide" id="size" aria-labelledby="size-title">
+  <div class="size-wrap">
+    <h2 class="size-title" id="size-title">Size Guide</h2>
+    <p class="size-sub">Relaxed luxury fit. If you’re between sizes, choose the larger size for a roomier silhouette.</p>
+
+    <!-- Hoodie -->
+    <details class="size" open>
+      <summary><span>Hoodie — صحراء</span><span class="chev"></span></summary>
+      <div class="table-wrap">
+        <table aria-label="Hoodie size chart">
+          <thead>
+            <tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th><th>Sleeve (cm)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>S</td><td>54</td><td>66</td><td>62</td></tr>
+            <tr><td>M</td><td>57</td><td>68</td><td>63</td></tr>
+            <tr><td>L</td><td>60</td><td>70</td><td>64</td></tr>
+            <tr><td>XL</td><td>63</td><td>72</td><td>65</td></tr>
+            <tr><td>XXL</td><td>66</td><td>74</td><td>66</td></tr>
+          </tbody>
+        </table>
+        <div class="caption">Measurements taken flat. Allow 1–2 cm variance.</div>
+      </div>
+    </details>
+
+    <!-- Pants -->
+    <details class="size">
+      <summary><span>Pants — الصحراء</span><span class="chev"></span></summary>
+      <div class="table-wrap">
+        <table aria-label="Pants size chart">
+          <thead>
+            <tr><th>Size</th><th>Waist (cm)</th><th>Hip (cm)</th><th>Inseam (cm)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>S</td><td>72–76</td><td>98</td><td>76</td></tr>
+            <tr><td>M</td><td>77–82</td><td>102</td><td>77</td></tr>
+            <tr><td>L</td><td>83–88</td><td>106</td><td>78</td></tr>
+            <tr><td>XL</td><td>89–94</td><td>110</td><td>79</td></tr>
+            <tr><td>XXL</td><td>95–100</td><td>114</td><td>80</td></tr>
+          </tbody>
+        </table>
+        <div class="caption">Wide-leg silhouette with drawcord waist for flexible fit.</div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- CONTACT / FOOTER -->
+<footer class="site-footer" id="contact" aria-label="Contact">
+  <div class="rule" aria-hidden="true"></div>
+  <h2 class="ta-c" style="color:var(--gold);letter-spacing:6px;text-transform:uppercase;margin-bottom:10px">Contact</h2>
+  <p class="ta-c">Questions or wholesale? Reach us anytime.</p>
+
+  <div class="socials" style="margin-top:18px">
+    <a href="mailto:hello@saharapremiumwear.com" aria-label="Email">✉️ Email</a>
+    <a href="https://instagram.com/saharapremiumwear" target="_blank" rel="noopener" aria-label="Instagram">📸 Instagram</a>
+    <a href="https://tiktok.com/@saharapremiumwear" target="_blank" rel="noopener" aria-label="TikTok">🎵 TikTok</a>
+  </div>
+
+  <div class="contact-card">
+    Prefer WhatsApp? Message us: <strong>+961 ••• •• ••</strong>
+  </div>
+
+  <p class="ta-c" style="margin-top:22px;color:var(--dim)">© 2025 Sahara Premium Wear · All Rights Reserved</p>
 </footer>
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Sahara Premium Wear","brand":"Sahara Premium Wear","logo":"prototype.jpg","sameAs":["https://instagram.com/saharapremiumwear","https://tiktok.com/@saharapremiumwear"]}
+</script>
+
+<!-- Interactions: Parallax + Reveal + Nav -->
+<script>
+(function(){
+  const nav = document.getElementById('nav');
+  const layer = document.getElementById('parallax');
+  let ticking = false;
+  function onScroll(){
+    if(!ticking){
+      requestAnimationFrame(()=>{
+        const y = window.scrollY || 0;
+        if(y > 24){ nav.classList.add('show'); } else { nav.classList.remove('show'); }
+        if(layer){ layer.style.transform = 'translateY(' + (y * -0.07) + 'px)'; }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+  }, {threshold:0.18});
+  document.querySelectorAll('.card, .thumb').forEach(el => io.observe(el));
+})();
+</script>
+
+<!-- Reduce motion -->
+<script>
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('[style]').forEach(n=>n.style.animation='none');
+}
+</script>
+
 </body>
 </html>
